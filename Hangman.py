@@ -4,7 +4,6 @@
 # Reference: https://www.codedex.io/projects/build-a-word-guessing-game-with-python
 
 import random
-import time
 
 WORD_BANK = ['plug', 'import', 'word', 'teeth']
 
@@ -67,13 +66,17 @@ attempts = 7
 curr = 0 # index for which hangman stage to use
 
 while attempts > 0:
-    print('\nCurrent word: ' + ' '.join(guessedWord))# print contents of list
-    guess = input('Guess a letter: ').lower()
+    print('\nCurrent word: ' + ' '.join(guessedWord)) # print contents of list
+    guess = input('Guess a letter: ')
+
+    while len(guess) > 1 or not guess.isalpha(): # check if guess is a valid letter
+        guess = input('Guess a singular letter: ')
+
     if guess in word:
         for i in range(len(word)):
             if word[i] == guess:
-                guessedWord[i] = guess
-            print('Great guess!')
+                guessedWord[i] = guess # replace blank with correct letter
+        print('Great guess!')
     else:
         attempts -= 1
         print(hangmanStages[curr])
